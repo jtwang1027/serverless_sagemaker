@@ -12,7 +12,7 @@ studio version vs python sdk
 - save data in s3 bucket
 - choose model type 
 
-
+- selecting best model, model creation, deployment / batch transformation
 
 ## Setting up Cloudwatch and Lambda
 
