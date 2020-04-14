@@ -3,6 +3,9 @@
 **add Schematic here**
 
 ## AutoML (Autopilot)
+
+studio version vs python sdk
+
 ### Configuration
 - data preprocessing, (must be a dataframe)
 - Nan are OK
@@ -26,3 +29,9 @@
 - slow even with small datasets
 - typically requires (and defaults to) faster instance types for model training (including preprocessing, model selection, hyperparameter tuning)
 - contrast with Ludwig and Google AutoML
+
+
+### Helpful resources
+- [AWS Sagemaker notebooks] (https://github.com/awslabs/amazon-sagemaker-examples) 
+- Julien Simon 
+- 
