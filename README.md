@@ -15,7 +15,7 @@ The data file needs to be a csv in s3. The csv file needs to have a header with 
 ### Autopilot experiment output in Sagemaker Studio
 When the Autopilot experiment has concluded, the preprocessing (transform) job, training jobs, and hyperparameter tuning can be view inside jupyter notebook. 
 ![image](https://user-images.githubusercontent.com/46359281/79669499-ed4d7300-8189-11ea-8d99-609f234edb0a.png)
-In addition, there are 2 attached notebooks: 1) data exploration notebook (descriptive statistics on each feature) and 2) candidate generation notebook. The candidate generation notebook gives you complete code to rerun the entire analysis, and gives you insight into all the configurations used at each step, including details on each candidate pipeline. For example, you can see the methods used for imputating missing data, scaling features, and model use for training. These all have links to the source code.
+In addition, there are 2 attached notebooks: 1) data exploration notebook (descriptive statistics on each feature) and 2) candidate generation notebook. The candidate generation notebook gives you complete code to rerun the entire analysis, and gives you insight into all the configurations used at each step, including details on each candidate pipeline. For example, you can see the methods used for imputating missing data, scaling features, and model use for training. These all have links to the source code.  
 ![image](https://user-images.githubusercontent.com/46359281/79669603-aad86600-818a-11ea-924a-5bf68e9d9926.png)
 
 ### Autopilot pipeline setup and deployment
@@ -28,29 +28,24 @@ At the end of Autopilot, you will have a best *training job* from the hyperparam
 AWS Lambda functions let you run serverless applications with automatic scaling when triggered. These functions can also be triggered by a wide array of events. For example, you can add an HTTP API to directly trigger lambda functions. Here, I've used *Cloudwatch* to trigger the lambda function on a scheduled basis for serverless, automated model training. 
 
 ### Lambda function for model retraining
-The lambda function code can be found in *handler.py* (python 3.6). The function can be understood in 2 steps: 
-1) Rerun the preprocessing on the new data and save to s3 bucket 
+The lambda function code can be found in *handler.py* (python 3.6). The function can be understood in 2 steps:  
 
-
+*1) Rerun the preprocessing on the new data and save to s3 bucket*
 In the first step, call the *describe_transform_job* function to load the transform job artifacts and configs. Update it with new data input/output locations. And, inintiate a new transform job.
 
-2) Execute training job on new (or full dataset)
+*2) Execute training job on new (or full dataset)*  
 
 In the second step, call the *describe_training_job* to load previous model artifacts and configs. Update it with new configs (new data locations, new instance types, and spot training (if desired)). Start this as well.
 
 ### (Optional) Using Lambda layers to provide python modules
-This lambda function can be run without installing new libraries. But, if the module you need is not installed (for example, the *sagemaker* library doesn't come installed), you can easily supply the modules. The file structure of the supplied zip file is critical. These resources are helpful
-[(link1)](https://www.youtube.com/watch?v=3BH79Uciw5w) ~3:23
-[(link2)](https://stackoverflow.com/questions/55695187/import-libraries-in-lambda-layers)
+This lambda function can be run without installing new libraries. But, if the module you need is not installed (for example, the *sagemaker* library doesn't come installed), you can easily supply the modules. The file structure of the supplied zip file is critical. The pip-3.x version for installation is critical. These resources are helpful:
+- [(link1)](https://www.youtube.com/watch?v=3BH79Uciw5w) ~3:23
+- [(link2)](https://stackoverflow.com/questions/55695187/import-libraries-in-lambda-layers)
 
-### AWS Autopilot limitations
-- requires CSV data
-- slow even with small datasets
-- typically requires (and defaults to) faster instance types for model training (including preprocessing, model selection, hyperparameter tuning)
-- contrast with Ludwig and Google AutoML
-
+### Evaluating model from new training job using Batch Transform
+See the *batch_transform_job.ipynb*. Create the model from the training job. Then, create batch transform job.
 
 ### Helpful resources
-- [AWS Sagemaker notebooks] (https://github.com/awslabs/amazon-sagemaker-examples) 
-- Julien Simon 
+- [AWS Sagemaker notebooks](https://github.com/awslabs/amazon-sagemaker-examples) 
+- [Julien Simon](https://www.youtube.com/watch?v=FJaykbAtGTM&t=308s) 
 - 
