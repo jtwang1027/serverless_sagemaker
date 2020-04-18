@@ -19,7 +19,7 @@ In addition, there are 2 attached notebooks: 1) data exploration notebook (descr
 ![image](https://user-images.githubusercontent.com/46359281/79669603-aad86600-818a-11ea-924a-5bf68e9d9926.png)
 
 ### Autopilot pipeline setup and deployment
-At the end of Autopilot, you will have a best *training job* from the hyperparameter tuning. This training job needs to not only be converted into a Sagemaker model, but also needs to be linked to the preprocessing/batch transform that it accepted data from. This can be done in the *candidate generation notebook*, which has code cells for creating a data pipeline, which essentially links the preprocessing job + training job. This can also be done in the Sagemaker console, but make sure you transfer all the environment variables from each job, and also add env variables recommmended in the candidate generation notebook. For example, the models I needed the filetypes to be specified for the "transformer" (data preprocessing step) and estimator (xgboost model): 
+At the end of Autopilot, you will have a best *training job* from the hyperparameter tuning. This training job needs to not only be converted into a Sagemaker model, but also needs to be linked to the preprocessing/batch transform job that it accepted data from. This can be done in the *candidate generation notebook*, which has code cells for creating a data pipeline, which essentially links the preprocessing job + training job. This can also be done in the Sagemaker console (Create a model with 2 containers), but make sure you transfer all the environment variables from each job, and also add env variables recommmended in the candidate generation notebook. For example, my models needed the filetypes to be specified for the "transformer" (data preprocessing step) and estimator (xgboost model): 
 ![image](https://user-images.githubusercontent.com/46359281/79669916-29360780-818d-11ea-9b55-2bc08ce2fb50.png)
 
 
@@ -32,6 +32,7 @@ At the end of Autopilot, you will have a best *training job* from the hyperparam
 
 ### Cloudwatch timer for triggering lambda function
 
+### Using Lambda layers to provide python modules
 
 ### AWS Autopilot limitations
 - requires CSV data
