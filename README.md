@@ -24,13 +24,15 @@ At the end of Autopilot, you will have a best *training job* from the hyperparam
 
 
 ## Setting up Cloudwatch and Lambda
+![image](https://user-images.githubusercontent.com/46359281/79670316-f7727000-818f-11ea-9def-befb14167245.png)
+AWS Lambda functions let you run serverless applications with automatic scaling when triggered. These functions can also be triggered by a wide array of events. For example, you can add an HTTP API to directly trigger lambda functions. Here, I've used *Cloudwatch* to trigger the lambda function on a scheduled basis for serverless, automated model training. 
 
-### Lambda function breakdown
-- handler event notification
+### Lambda function for model retraining
+The lambda function code can be found in *handler.py* (python 3.6).
+
 - passing artifacts from previous model
 - using environment variables as new parameters for new model
 
-### Cloudwatch timer for triggering lambda function
 
 ### Using Lambda layers to provide python modules
 
