@@ -1,15 +1,14 @@
 # AWS AutoML model generation with scheduled retraining via AWS Cloudwatch and Lambda
 
-**add Schematic here**
+Explanation for parts of this project has been broken down into youtube videos here:
+- Autopilot Walkthrough [(pt1)](https://youtu.be/5yVdjdlmmmo), [(pt2)](https://youtu.be/bfNnRfu6zMs)
+- Lambda function & Cloudwatch setup [(pt3)](https://youtu.be/eT_xbWF-t60)
+- Evaluating new training model with batch transform job [(pt4)](https://youtu.be/2D42G7iZUDc)
 
 ## AutoML (Autopilot)
 Autopilot helps create classification and regression models without explicitly and defining feature types. Autopilot comes up with several "candidates pipelines", which consist of a data preprocessing step (with train-test split) and an inference model. After, hyperparameter optimization is run on each pipeline (>200 training job) aimed at minimizing the objective function (in this case validation rmse). For this case, I used the BACE dataset to predict drug pIC50, a quantiative metric of drug inhibition on the enzyme Bace1 enzyme [(link)](http://moleculenet.ai/datasets-1). 
 
 
-[(pt1)](https://youtu.be/5yVdjdlmmmo)
-[(pt2)](https://youtu.be/bfNnRfu6zMs)
-[(pt3)](https://youtu.be/eT_xbWF-t60)
-[(pt4)](https://youtu.be/2D42G7iZUDc)
 
 In the video, I demonstrate how to use Autopilot using the AWS Sagemaker Studio, but the functionality can also be access via the low-level boto3 API [here](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/sagemaker.html#SageMaker.Client.create_auto_ml_job), and allows you to specify other parameters (such as objective function, max number of candidates, max training job time).
 
