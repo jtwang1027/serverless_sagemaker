@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
+SageMakerAutopilotCandidateDefinitionNotebook.ipynb
+batch_transform_job-private.ipynb
+
 
 # C extensions
 *.so
