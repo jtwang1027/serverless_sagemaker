@@ -12,11 +12,16 @@ In the video, I demonstrate how to use Autopilot using the AWS Sagemaker Studio,
 ### Configuration notes for inputting data into autopilot  
 The data file needs to be a csv in s3. The csv file needs to have a header with column names, which you will use to specify the target column. Missing values are handled via various imputation methods in the preprocessing step. 
 
-### Data pipeline
+### Autopilot experiment output in Sagemaker Studio
 When the Autopilot experiment has concluded, the preprocessing (transform) job, training jobs, and hyperparameter tuning can be view inside jupyter notebook. 
 ![image](https://user-images.githubusercontent.com/46359281/79669499-ed4d7300-8189-11ea-8d99-609f234edb0a.png)
+In addition, there are 2 attached notebooks: 1) data exploration notebook (descriptive statistics on each feature) and 2) candidate generation notebook. The candidate generation notebook gives you complete code to rerun the entire analysis, and gives you insight into all the configurations used at each step, including details on each candidate pipeline. For example, you can see the methods used for imputating missing data, scaling features, and model use for training. These all have links to the source code.
+![image](https://user-images.githubusercontent.com/46359281/79669603-aad86600-818a-11ea-924a-5bf68e9d9926.png)
 
-- selecting best model, model creation, deployment / batch transformation
+### Autopilot pipeline setup and deployment
+At the end of Autopilot, you will have a best *training job* from the hyperparameter tuning. This training job needs to not only be converted into a Sagemaker model, but also needs to be linked to the preprocessing/batch transform that it accepted data from. This can be done in the *candidate generation notebook*, which has code cells for creating a data pipeline, which essentially links the preprocessing job + training job. This can also be done in the Sagemaker console, but make sure you transfer all the environment variables from each job, and also add env variables recommmended in the candidate generation notebook. For example, the models I needed the filetypes to be specified for the "transformer" (data preprocessing step) and estimator (xgboost model): 
+![image](https://user-images.githubusercontent.com/46359281/79669916-29360780-818d-11ea-9b55-2bc08ce2fb50.png)
+
 
 ## Setting up Cloudwatch and Lambda
 
