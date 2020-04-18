@@ -28,13 +28,20 @@ At the end of Autopilot, you will have a best *training job* from the hyperparam
 AWS Lambda functions let you run serverless applications with automatic scaling when triggered. These functions can also be triggered by a wide array of events. For example, you can add an HTTP API to directly trigger lambda functions. Here, I've used *Cloudwatch* to trigger the lambda function on a scheduled basis for serverless, automated model training. 
 
 ### Lambda function for model retraining
-The lambda function code can be found in *handler.py* (python 3.6).
-
-- passing artifacts from previous model
-- using environment variables as new parameters for new model
+The lambda function code can be found in *handler.py* (python 3.6). The function can be understood in 2 steps: 
+1) Rerun the preprocessing on the new data and save to s3 bucket 
 
 
-### Using Lambda layers to provide python modules
+In the first step, call the *describe_transform_job* function to load the transform job artifacts and configs. Update it with new data input/output locations. And, inintiate a new transform job.
+
+2) Execute training job on new (or full dataset)
+
+In the second step, call the *describe_training_job* to load previous model artifacts and configs. Update it with new configs (new data locations, new instance types, and spot training (if desired)). Start this as well.
+
+### (Optional) Using Lambda layers to provide python modules
+This lambda function can be run without installing new libraries. But, if the module you need is not installed (for example, the *sagemaker* library doesn't come installed), you can easily supply the modules. The file structure of the supplied zip file is critical. These resources are helpful
+[(link1)](https://www.youtube.com/watch?v=3BH79Uciw5w) ~3:23
+[(link2)](https://stackoverflow.com/questions/55695187/import-libraries-in-lambda-layers)
 
 ### AWS Autopilot limitations
 - requires CSV data
